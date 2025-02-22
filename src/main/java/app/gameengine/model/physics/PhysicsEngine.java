@@ -1,10 +1,8 @@
 package app.gameengine.model.physics;
 
-import app.gameengine.model.gameobjects.DynamicGameObject;
 import app.gameengine.Level;
+import app.gameengine.model.gameobjects.DynamicGameObject;
 import app.gameengine.model.gameobjects.StaticGameObject;
-
-import java.util.ArrayList;
 
 public class PhysicsEngine {
 
@@ -51,8 +49,23 @@ public class PhysicsEngine {
     }
 
     public boolean detectCollision(Hitbox hb1, Hitbox hb2){
-        return false;
         // TODO: return true if the 2 hitboxes overlap; false otherwise
+        double x1 = hb1.getLocation().getX();
+        double y1 = hb1.getLocation().getY();
+        double dx1 = hb1.getDimensions().getX();
+        double dy1 = hb1.getDimensions().getY();
+        double x2 = hb2.getLocation().getX();
+        double y2 = hb2.getLocation().getY();
+        double dx2 = hb2.getDimensions().getX();
+        double dy2 = hb2.getDimensions().getY();
+        if (x1 + dx1 > x2 && x1 + dx1 <= x2 + dx2) {
+            if (y1 >= y2 && y1 < y2 + dy2) return true;
+            if (y1 + dy1 > y2 && y1 + dy1 <= y2 + dy2) return true;
+        } else if (x2 + dx2 > x1 && x2 + dx2 <= x1 + dx1) {
+            if (y2 >= y1 && y2 < y1 + dy1) return true;
+            if (y2 + dy2 > y1 && y2 + dy2 <= y1 + dy1) return true;
+        }
+        return false;
     }
 
 }
